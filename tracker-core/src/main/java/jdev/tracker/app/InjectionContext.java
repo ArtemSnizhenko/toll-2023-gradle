@@ -1,14 +1,17 @@
-package jdev.tracker;
+package jdev.tracker.app;
 
 import jdev.tracker.service.GPSDataService;
 import jdev.tracker.service.DataSaveService;
 import jdev.tracker.service.DataSendService;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.client.RestTemplate;
 
 
 /**
@@ -41,5 +44,10 @@ public class InjectionContext {
         scheduler.setThreadNamePrefix("poolScheduler");
         scheduler.setPoolSize(20);
         return scheduler;
+    }
+
+    @Bean //создаем сомпонент restTemplate - клиент REST
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
