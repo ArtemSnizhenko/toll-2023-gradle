@@ -46,7 +46,7 @@ public class InjectionContext {
         return scheduler;
     }
 
-    @Bean //создаем сомпонент restTemplate - клиент REST
+    @Bean //создаем компонент restTemplate - клиент REST
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
