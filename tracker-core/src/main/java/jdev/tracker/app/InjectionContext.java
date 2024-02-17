@@ -13,9 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 
-
 /**
  * Created by artem on 20.01.24.
+ * класс конфигурации
  */
 
 @Configuration
@@ -23,22 +23,26 @@ import org.springframework.web.client.RestTemplate;
 @PropertySource("classpath:/app.properties")
 public class InjectionContext {
 
-    @Bean//сервис генерации данных
+    /*сервис генерации данных*/
+    @Bean
     public GPSDataService gps(){
         return new GPSDataService();
     }
 
-    @Bean//сервис сохранения данных
+    /*сервис сохранения данных*/
+    @Bean
     public DataSaveService saveService(){
         return new DataSaveService();
     }
 
-    @Bean//сервис отправки данных
+    /*сервис отправки данных*/
+    @Bean
     public DataSendService sendService(){
         return new DataSendService();
     }
 
-    @Bean//настройка размера очереди
+    /*настройка размера очереди*/
+    @Bean
     public TaskScheduler poolScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setThreadNamePrefix("poolScheduler");
@@ -46,7 +50,8 @@ public class InjectionContext {
         return scheduler;
     }
 
-    @Bean //создаем компонент restTemplate - клиент REST
+    /*создаем компонент restTemplate - клиент REST*/
+    @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

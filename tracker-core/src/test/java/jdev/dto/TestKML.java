@@ -1,22 +1,22 @@
 package jdev.dto;
 
-import jdev.tracker.KMLreadTrek;
+import jdev.tracker.KMLTrek;
 
 import org.junit.Test;
 
 /**
+ * Класс тестирования получения координат из KML файла
  * Created by artem on 04.02.24.
  */
 
 public class TestKML {
 
-    KMLreadTrek kmlTest = new KMLreadTrek();
+    KMLTrek kmlTest = new KMLTrek();
 
     @Test
     public void testKmlDo()throws Exception {
-
+        double[] tempArr = kmlTest.getCoordinates();
         for (int k=0;k < 1000;k++){
-            double[] tempArr = kmlTest.getCoordinates();
             System.out.println(tempArr[0]+" / "+
                     tempArr[1]+" / "+
                     tempArr[2]);

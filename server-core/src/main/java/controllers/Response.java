@@ -5,19 +5,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Created by jdev on 05.05.2017.
+ * класс для отправки ответа на POST запрос
  */
+
 public class Response {
+
     Boolean success;
 
     public Response(Boolean success) {
         this.success = success;
     }
 
-    public Boolean getMessage() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setMessage(Boolean message) {
+    public void setSuccess(Boolean message) {
         this.success = success;
     }
 
@@ -25,6 +28,4 @@ public class Response {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
-
-
 }
