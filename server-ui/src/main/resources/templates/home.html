@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Пример Spring Security</title>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+        <p>Кликните <a th:href="@{/payments}">здесь</a>, для перехода на страницу payments (роль CLIENT).</p>
+        <p>Кликните <a th:href="@{/routes}">здесь</a>, для перехода на страницу routes (роль CLIENT).</p>
+        <p>Кликните <a th:href="@{/registerClient}">здесь</a>, для перехода на страницу registerClient (роль MANAGER).</p>
+        <p>Кликните <a th:href="@{/registerManager}">здесь</a>, для перехода на страницу registerManager (роль ROOT).</p>
+    </body>
+</html>
