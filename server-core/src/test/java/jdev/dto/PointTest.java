@@ -15,7 +15,7 @@ public class PointTest {
         Point point = new Point();
         point.setLatitude(56);
         point.setLongitude(74);
-        assertTrue(point.toJson().contains("\"lat\":56"));
+        assertTrue(point.toJson().contains("\"latitude\":56"));
         System.out.println(point.toJson());
     }
 }

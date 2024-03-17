@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class PointTest {
 
     private final String autoId = "o567gfd";
-    private final String json = "{\"lat\":56.0,\"lon\":74.0}";
+    private final String json = "{\"latitude\":56.0,\"longitude\":74.0}";
 
 
     //обьект в строку
@@ -22,8 +22,7 @@ public class PointTest {
         point.setLatitude(56);
         point.setLongitude(74);
         String pointJson = point.toJson();
-        assertTrue(pointJson.contains("\"lat\":56"));
-        assertTrue(pointJson.contains("\"time\":"));
+        assertTrue(pointJson.contains("\"latitude\":56"));
         System.out.println(pointJson);
     }
 

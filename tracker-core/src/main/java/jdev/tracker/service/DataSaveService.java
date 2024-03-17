@@ -22,13 +22,13 @@ public class DataSaveService {
     int i;
 
     /*заполнение очереди объектами типа Point*/
-    void put(Point point) throws InterruptedException {
+    public void put(Point point) throws InterruptedException {
         i = putCount++;
         queue.put(point);
     }
 
     /*извлечение из очереди объектов типа Point*/
-    Point take() throws InterruptedException {
+    public Point take() throws InterruptedException {
         return queue.take();
     }
 }

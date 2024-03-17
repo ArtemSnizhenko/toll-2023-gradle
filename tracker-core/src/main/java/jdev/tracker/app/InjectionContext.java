@@ -21,6 +21,12 @@ import org.springframework.web.client.RestTemplate;
 @PropertySource("classpath:/app.properties")
 public class InjectionContext {
 
+    /*создаем компонент restTemplate - клиент REST*/
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
     /*сервис генерации данных*/
     @Bean
     public GPSDataService gps(){
@@ -36,7 +42,7 @@ public class InjectionContext {
     /*сервис отправки данных*/
     @Bean
     public DataSendService sendService(){
-        return new DataSendService();
+        return new DataSendService(restTemplate(),saveService());
     }
 
     /*настройка размера очереди*/
@@ -46,11 +52,5 @@ public class InjectionContext {
         scheduler.setThreadNamePrefix("poolScheduler");
         scheduler.setPoolSize(20);
         return scheduler;
-    }
-
-    /*создаем компонент restTemplate - клиент REST*/
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }

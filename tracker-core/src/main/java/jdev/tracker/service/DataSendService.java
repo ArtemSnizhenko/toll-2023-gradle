@@ -17,19 +17,19 @@ public class DataSendService {
 
     private static final Logger log = LoggerFactory.
             getLogger(DataSendService.class);
-
-    /*автосвязывание с сервисом сохранения данных*/
-    @Autowired
-    private DataSaveService dataSaveService;
+    private final DataSaveService dataSaveService;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    RestTemplate restTemplate;
+    public DataSendService(RestTemplate restTemplate, DataSaveService dataSaveService) {
+        this.restTemplate = restTemplate;
+        this.dataSaveService = dataSaveService;
+    }
 
-     /*отправка данных по расписанию*/
+    /*отправка данных по расписанию*/
     @Scheduled(cron = "${cron.prop_send}")
-    private void sendData() throws Exception {
+    public String sendData() throws Exception {
         String pointJson = dataSaveService.take().toJson();
-
         /*
          * выполнения POST запроса, в теле которого передаются координаты
          * в формате JSON
@@ -38,5 +38,6 @@ public class DataSendService {
             .postForObject("http://localhost:8080/server_core",
                             pointJson, String.class);
         log.info(response);                                             //log ответа
+        return response;
     }
 }
