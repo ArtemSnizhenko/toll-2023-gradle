@@ -3,6 +3,8 @@ package jdev.tracker.service;
 import jdev.dto.Point;
 import jdev.tracker.KMLTrek;
 import java.util.Random;
+
+import jdev.tracker.dao.TrackPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -32,12 +34,14 @@ public class GPSDataService {
         double latitude = tempArr[1];
         double azimuth = tempArr[2];
         double speed = 60 + (random * (95 - 60));           //скорсть задаем рандомно
-        Point point = new Point();
+        Point point = new TrackPoint();
         point.setLatitude(latitude);
         point.setLongitude(longitude);
         point.setAzimuth(azimuth);
         point.setSpeed(speed);
+        /*System.out.print("1111111===========================");*/
         dataSaveService.put(point);                         //сохранение сообщений
+
     }
 }
 

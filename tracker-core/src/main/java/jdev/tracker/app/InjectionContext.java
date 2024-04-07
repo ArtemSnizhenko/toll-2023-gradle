@@ -3,25 +3,36 @@ package jdev.tracker.app;
 import jdev.tracker.service.GPSDataService;
 import jdev.tracker.service.DataSaveService;
 import jdev.tracker.service.DataSendService;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Created by artem on 20.01.24.
  * класс конфигурации
  */
 
-@Configuration
+@EnableJpaRepositories("jdev.tracker.dao")
+@EntityScan(basePackageClasses = jdev.tracker.dao.TrackPoint.class)
+@ComponentScan(basePackages = {"jdev.tracker.app","jdev.tracker.dao","jdev.tracker.service"})
 @EnableScheduling
-@PropertySource("classpath:/app.properties")
+@Configuration
+@PropertySource({"classpath:/application.properties", "classpath:/application-${spring.profiles.active}.properties"})
 public class InjectionContext {
 
-    /*создаем компонент restTemplate - клиент REST*/
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+       /*создаем компонент restTemplate - клиент REST*/
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
@@ -53,4 +64,6 @@ public class InjectionContext {
         scheduler.setPoolSize(20);
         return scheduler;
     }
+
+
 }
