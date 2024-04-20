@@ -18,10 +18,10 @@ import java.util.List;
 @EnableJpaRepositories("dao")
 @EntityScan(basePackageClasses = TrackPoint.class)
 @Service
-public class JpaServerApplicationService implements CommandLineRunner { //имплементируем интерфейс CommandLineRunner (командная строка запуска)
+public class JpaApplicationService implements CommandLineRunner { //имплементируем интерфейс CommandLineRunner (командная строка запуска)
 
     private static final Logger log = LoggerFactory.
-            getLogger(JpaServerApplicationService.class);
+            getLogger(JpaApplicationService.class);
 
     private List<TrackPoint> all;
 
@@ -33,33 +33,39 @@ public class JpaServerApplicationService implements CommandLineRunner { //имп
     @Autowired
     PointRepository pointRepository;
 
+    /*извлечение из базы объектов типа TrackPoint*/
+    public TrackPoint take() throws InterruptedException {
+        return read();
+    }
+
+    public void put(TrackPoint trackPoint){
+        pointRepository.save(trackPoint);
+    }
+
     @Override
 //переопределяем метод который позволит
 //нам выполнять методы нашего приложения при запуске
     public void run(String... args) throws Exception {
-        Point point = new TrackPoint();
+        /*Point point = new TrackPoint();
         point.setLatitude(56);
         point.setLongitude(34);
         point.setAzimuth(44);
         point.setSpeed(90);
 
-        TrackPoint trackPoint1 = (TrackPoint)point;
         TrackPoint trackPoint = create(point);
-        read();
+//        read();
 
-        log.info("=======after create");
+//        log.info("=======after create");
+        TrackPoint t = take();
+        log.info(t.toJson());*/
     }
 
     private void delete(TrackPoint trackPoint) {
         pointRepository.delete(trackPoint);
     }
 
-    private void update(TrackPoint trackPoint, Point point) {
-//        trackPoint.setModel(model);
-        pointRepository.save(trackPoint);
-    }
 
-    private void read() {
+    private TrackPoint read() {
         all = (List<TrackPoint>) pointRepository.findAll();
 
         if (all.size() == 0) {
@@ -67,6 +73,7 @@ public class JpaServerApplicationService implements CommandLineRunner { //имп
         } else {
             all.stream().forEach(trackPoint -> log.info(trackPoint.toString()));
         }
+        return all.get(0);
     }
 
     private TrackPoint create(Point point) {

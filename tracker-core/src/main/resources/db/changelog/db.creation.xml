@@ -8,6 +8,7 @@
             CREATE TABLE TRACKS
             (
                 ID integer AUTO_INCREMENT PRIMARY KEY,
+                TRACKERID INTEGER,
                 LATITUDE DOUBLE,
                 LONGITUDE DOUBLE,
                 AZIMUT DOUBLE,

@@ -4,6 +4,6 @@ import jdev.tracker.dao.TrackPoint;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+/*@Repository*/
 public interface PointRepository extends CrudRepository<TrackPoint, Integer> {
 }

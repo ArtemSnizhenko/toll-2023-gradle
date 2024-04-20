@@ -1,6 +1,5 @@
 package dao;
 
-
 import jdev.dto.Point;
 
 import javax.persistence.*;
@@ -16,12 +15,18 @@ public class TrackPoint extends Point {
     @Column(name = "ID")
     int id;
 
+    @Column(name = "TRACKERID")
+    int trackerId;
+
     @Column(name = "LATITUDE")
     double latitude;
+
     @Column(name = "LONGITUDE")
     double longitude;
+
     @Column(name = "AZIMUT")
     double azimuth;
+
     @Column(name = "SPEED")
     double speed;
 
@@ -31,6 +36,14 @@ public class TrackPoint extends Point {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTrackerId() {
+        return trackerId;
+    }
+
+    public void setTrackerId(int trackerId) {
+        this.trackerId = trackerId;
     }
 
     public double getLatitude() {
@@ -69,6 +82,7 @@ public class TrackPoint extends Point {
     public String toString() {
         return "TrackPoint{" +
                 "id=" + id +
+                ", trackerId" + trackerId +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", azimuth=" + azimuth +

@@ -2,7 +2,7 @@ package jdev.tracker;
 
 import org.junit.Test;
 
-import static org.apache.coyote.http11.Constants.a;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 

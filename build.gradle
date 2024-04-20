@@ -96,7 +96,7 @@ project(':tracker-core') {
 
 //        Зависимости для jd.jpa,liquibase,h2database
         compile("org.springframework.boot:spring-boot-starter-data-jpa")
-        compile group: 'org.liquibase', name: 'liquibase-core', version: '3.7.0'
+        compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
         compile group: 'com.h2database', name: 'h2', version: '1.4.195'
         
         testCompile("org.springframework.boot:spring-boot-starter-test")

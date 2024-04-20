@@ -61,9 +61,7 @@ public class InjectionContext {
     public TaskScheduler poolScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setThreadNamePrefix("poolScheduler");
-        scheduler.setPoolSize(20);
+        scheduler.setPoolSize(2);
         return scheduler;
     }
-
-
 }

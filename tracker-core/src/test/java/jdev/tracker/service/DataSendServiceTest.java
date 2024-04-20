@@ -1,6 +1,7 @@
 package jdev.tracker.service;
 
 import jdev.dto.Point;
+import jdev.tracker.dao.TrackPoint;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,7 +34,7 @@ public class DataSendServiceTest {
 
     @Test
     public void sendData() throws Exception {
-        when(dataSaveService.take()).thenReturn(point);
+        when(dataSaveService.take()).thenReturn((TrackPoint)point);
         when(restTemplate.postForObject("http://localhost:8080/server_core",
                 point.toJson(), String.class)).thenReturn("{\"success\":true}");
         String result = mockedDataSendService.sendData();
