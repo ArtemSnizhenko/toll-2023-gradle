@@ -28,7 +28,7 @@ public class DataSendService {
     }
 
     /*отправка данных по расписанию*/
-//    @Scheduled(cron = "${cron.prop_send}")
+    @Scheduled(cron = "${cron.prop_send}")
     public String sendData() throws Exception {
 
         TrackPoint trackPoint = dataSaveService.take();
@@ -36,7 +36,6 @@ public class DataSendService {
          * выполнения POST запроса, в теле которого передаются координаты
          * в формате JSON
          */
-//        log.info("RECORDSIS==" + trackPoint.toJson());
         String response = restTemplate
             .postForObject("http://localhost:8080/server_core",
                     trackPoint.toJson(), String.class);
@@ -46,7 +45,7 @@ public class DataSendService {
         /*удаление передаваемой сущности из базы при подтверждение успешной передачи*/
         if (response.contains("{\"success\":true}")) {
             dataSaveService.delete(trackPoint);
-            log.info("DELET_ROW");//log удаления уже отправленной строки
+/*            log.info("DELET_ROW");*/
         }
 //        System.out.print(response);//log ответа
         return response;

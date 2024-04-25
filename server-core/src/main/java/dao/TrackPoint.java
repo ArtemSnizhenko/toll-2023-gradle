@@ -80,15 +80,14 @@ public class TrackPoint extends Point {
 
     @Override
     public String toString() {
-        return "TrackPoint{" +
-                "id=" + id +
-                ", trackerId" + trackerId +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", azimuth=" + azimuth +
-                ", speed=" + speed +
-                '}';
+        return "\n" + "TrackPoint{"  + "\n" +
+                "id=" + id  + ",\n" +
+                "trackerId=" + trackerId + ",\n" +
+                "latitude=" + latitude + ",\n" +
+                "longitude=" + longitude + ",\n" +
+                "azimuth=" + azimuth + ",\n" +
+                "speed=" + speed + "\n" +
+                '}' + "\n";
     }
-
 
 }

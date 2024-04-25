@@ -1,6 +1,7 @@
 package jdev.tracker.service;
 
 import jdev.dto.Point;
+import jdev.tracker.dao.TrackPoint;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ public class DataSaveServiceTest {
         point.setAzimuth(44);
         point.setSpeed(90);
         DataSaveService dataSaveService= new DataSaveService();
-        dataSaveService.put(point);
+        dataSaveService.put((TrackPoint) point);
         String pointJson = dataSaveService.take().toJson();
         assertTrue(pointJson.contains("\"latitude\":56.0"));
     }

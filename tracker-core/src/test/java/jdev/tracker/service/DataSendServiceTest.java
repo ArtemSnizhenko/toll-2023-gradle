@@ -46,7 +46,7 @@ public class DataSendServiceTest {
     @Test
     public void sendDataIntegration() throws Exception {
         DataSaveService dataSaveService = new DataSaveService();
-        dataSaveService.put(point);
+        dataSaveService.put((TrackPoint) point);
         String result = new DataSendService(new RestTemplate(),dataSaveService).sendData();
         assertNotNull(result);
         assertEquals("{\"success\":true}", result);

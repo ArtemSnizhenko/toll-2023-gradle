@@ -1,14 +1,12 @@
 package jdev.tracker.service;
 
-import jdev.dto.Point;
 import jdev.tracker.KMLTrek;
 import java.util.Random;
-
 import jdev.tracker.dao.TrackPoint;
-import jdev.tracker.dao.repo.PointRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -30,26 +28,26 @@ public class GPSDataService {
     @Autowired
     private DataSaveService dataSaveService;
 
-    /*@Autowired
-    PointRepository pointRepository;*/
+    @Value("${int.identifer}")
+    int identifer;
 
     /*вызов по расписанию*/
-//    @Scheduled(fixedRateString = "${task.fixed.rate.millis}")
-    @Scheduled(fixedDelay = 1000)
+    /*проблем - создается 2 потока в результате чего получатся 2 записи в БД*/
+    @Scheduled(fixedRateString = "${task.fixed.rate.millis}")
+//    @Scheduled(fixedDelay = 1000)
     private void tick() throws Exception {
-        double[] tempArr = kmlreadTrek.getCoordinates();    //читаем координаты с .KML файла
+        double[] tempArr = kmlreadTrek.getCoordinates();        //читаем координаты с .KML файла
+
         TrackPoint trackPoint = new TrackPoint();
         trackPoint.setLatitude(tempArr[1]);
         trackPoint.setLongitude(tempArr[0]);
         trackPoint.setAzimuth(tempArr[2]);
-        trackPoint.setSpeed(60 + (random * (95 - 60)));//скорсть задаем рандомно
-        trackPoint.setTrackerId(777);
+        trackPoint.setSpeed(60 + (random * (95 - 60)));         //скорсть задаем рандомно
+        /*идентификатор tracer-core*/
+        trackPoint.setTrackerId(identifer);
 
-        /*pointRepository.save(trackPoint);*/
-        log.info("FFFFFFF2");
+        dataSaveService.put(trackPoint);                         //сохранение сообщений
         Thread.sleep(2000);
-//        dataSaveService.put(trackPoint);                         //сохранение сообщений
-
     }
 }
 

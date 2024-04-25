@@ -3,18 +3,21 @@ package controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.TrackPoint;
-import jdev.dto.Point;
 import jpa.JpaApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Класс контроллера
  */
 
 @RestController                                                 //контроллер
+@EnableAutoConfiguration
 public class GPSController {
 
     private static final Logger log = LoggerFactory.
@@ -38,13 +41,20 @@ public class GPSController {
         return mapper.readValue(json, TrackPoint.class);
     }
 
-    /*метод для для получения информации
+    /*метод получения информации
     о пройденном маршруте для заданного устройства*/
+     @GetMapping("/point")
+     public String getrequestpoint(
+             @RequestParam("trackerId") int trackerId,
+             @RequestParam("size") int size) throws InterruptedException,
+             JsonProcessingException{
+         Iterable<TrackPoint> tracksPoint = jpaApplicationService.take(trackerId,size);
 
-    @GetMapping(value="/POINT")
-    public String postRequestPoint(@RequestBody int identifier, int cnt)
-            throws JsonProcessingException, InterruptedException {
-        log.info("CountPoint = " + cnt+" - "+identifier);
-        return jpaApplicationService.take().toJson();
-    }
+         String strJsonResulr = "";
+         for (TrackPoint trackPoint : tracksPoint) {
+             strJsonResulr = strJsonResulr + trackPoint.toJson() + "\n";
+             log.info(trackPoint.toString());
+         }
+         return strJsonResulr;
+     }
 }
