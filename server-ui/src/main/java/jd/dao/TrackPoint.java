@@ -1,19 +1,20 @@
-package jdev.dto;
+package jd.dao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jdev.dto.Point;
 
-/**
- * Created by artem on 26.12.23.
- */
-public class Point {
+public class TrackPoint extends Point {
 
     int id;
+
     int trackerId;
-    private double latitude; //широта
-    private double longitude; //долгота
-    private double azimuth; //
-    private double speed; //
+
+    double latitude;
+
+    double longitude;
+
+    double azimuth;
+
+    double speed;
 
     public int getId() {
         return id;
@@ -63,28 +64,16 @@ public class Point {
         this.speed = speed;
     }
 
-
-
-/*    public String toJson_old() {
-        return "Point{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", autoId='" + autoId + '\'' +
-                '}';
-    }*/
-
-
-    public String toJson() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this);
-    }
-
     @Override
     public String toString() {
-        return "Point{" +
-                "latitude=" + latitude +
-                ", longitude='" + longitude + '\'' +
-                '}';
+        return "\n" + "TrackPoint{"  + "\n" +
+                "id=" + id  + ",\n" +
+                "trackerId=" + trackerId + ",\n" +
+                "latitude=" + latitude + ",\n" +
+                "longitude=" + longitude + ",\n" +
+                "azimuth=" + azimuth + ",\n" +
+                "speed=" + speed + "\n" +
+                '}' + "\n";
     }
 
 }

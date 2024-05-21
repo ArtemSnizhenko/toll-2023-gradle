@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class GPSDataService {
+public class DataPeekService {
 
     private static final Logger log = LoggerFactory.
             getLogger(DataSendService.class);

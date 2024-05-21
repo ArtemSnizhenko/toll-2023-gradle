@@ -2,17 +2,15 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-    <changeSet id="db.creation" author="artem">
+    <changeSet id="db.creation2" author="artem">
         <sql>
 
-            CREATE TABLE TRACKS
+            CREATE TABLE USERS
             (
                 ID integer AUTO_INCREMENT PRIMARY KEY,
-                TRACKERID INTEGER,
-                LATITUDE DOUBLE,
-                LONGITUDE DOUBLE,
-                AZIMUT DOUBLE,
-                SPEED DOUBLE
+                USERNAME CHAR(100),
+                PASSWORD CHAR(100),
+                ROLES CHAR(100)
             )
 
         </sql>

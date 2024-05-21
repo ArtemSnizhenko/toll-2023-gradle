@@ -2,7 +2,7 @@ package jpa;
 
 import dao.TrackPoint;
 import dao.repo.PointRepository;
-import jdev.dto.Point;
+import dao.repo.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
@@ -33,33 +35,32 @@ public class JpaApplicationService {
     @Autowired
     PointRepository pointRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     /*извлечение из базы нужного количества
     объектов типа TrackPoint*/
     public  Iterable<TrackPoint> take(int trackerId, int size) throws InterruptedException {
-        return pointRepository.findByTrackerId(trackerId, new PageRequest(0,size));
+
+        /*Извелечение заданного числа отметок, с заданым идентификатором
+         отсортированным по убыванию свойства "id" (самых поздних) */
+        PageRequest page = new PageRequest(0,size, Sort.Direction.DESC,"id");
+        return pointRepository.findByTrackerId(trackerId, page);
     }
 
+    public Iterable<TrackPoint> readTable() throws InterruptedException {
+        return pointRepository.findAll();
+    }
+
+    /*размещение данных в БД*/
     public void put(TrackPoint trackPoint){
         pointRepository.save(trackPoint);
     }
 
+    /*удаление данных в БД*/
     private void delete(TrackPoint trackPoint) {
         pointRepository.delete(trackPoint);
     }
 
-    private TrackPoint read() {
-        all = (List<TrackPoint>) pointRepository.findAll();
 
-        if (all.size() == 0) {
-            log.info("NO RECORDS");
-        } else {
-            all.stream().forEach(trackPoint -> log.info(trackPoint.toString()));
-        }
-        return all.get(0);
-    }
-
-    private TrackPoint create(Point point) {
-//        trackPoint.setModel(model);
-        return pointRepository.save((TrackPoint)point);
-    }
 }

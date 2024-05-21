@@ -1,6 +1,6 @@
 package jdev.tracker.app;
 
-import jdev.tracker.service.GPSDataService;
+import jdev.tracker.service.DataPeekService;
 import jdev.tracker.service.DataSaveService;
 import jdev.tracker.service.DataSendService;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -39,8 +39,8 @@ public class InjectionContext {
 
     /*сервис генерации данных*/
     @Bean
-    public GPSDataService gps(){
-        return new GPSDataService();
+    public DataPeekService gps(){
+        return new DataPeekService();
     }
 
     /*сервис сохранения данных*/

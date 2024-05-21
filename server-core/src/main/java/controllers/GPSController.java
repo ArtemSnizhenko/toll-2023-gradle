@@ -3,6 +3,8 @@ package controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.TrackPoint;
+
+import jdev.dto.User;
 import jpa.JpaApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +30,56 @@ public class GPSController {
 
     /*определяем метод для приема координат в виде POST запросов*/
     @PostMapping(value = "/server_core")
-    public String postRequestGPS(@RequestBody String strackPoint)
+    public String postRequestGPS(@RequestBody String sTrackPoint)
             throws Exception {
-        log.info(strackPoint);
-        jpaApplicationService.put(decodeDTO(strackPoint));      //сохраняем полученные координаты в БД
+        log.info(sTrackPoint);
+        jpaApplicationService.put(decodeDTO(sTrackPoint));      //сохраняем полученные координаты в БД
         return new Response(true).toJson();             //возвращаем ответ на POST запрос в формате JSON
+    }
+
+
+
+    /*метод получения информации
+    о пройденном маршруте для заданного устройства*/
+     @GetMapping("/TrackPoint")                                 // пример запроса http://localhost:8080/TrackPoint?trackerId=777&size=3
+     public String getRequestTrackPointRest(
+             @RequestParam("trackerId") int trackerId,
+             @RequestParam("size") int size) throws InterruptedException,
+             JsonProcessingException{
+         Iterable<TrackPoint> tracksPoint = jpaApplicationService.take(trackerId,size);
+
+         String strJsonResult = "";
+         for (TrackPoint trackPoint : tracksPoint) {
+             strJsonResult = strJsonResult + trackPoint.toJson() + "\n";
+//             log.info(trackPoint.toString());
+         }
+         return strJsonResult;
+     }
+
+    @GetMapping("/getPoints")
+    public String getRequestTrackPointView() throws InterruptedException,
+            JsonProcessingException {
+         return toJSON(jpaApplicationService.readTable());
+    }
+
+    /* Сериализация в JSON и десериализация*/
+    private String toJSON(Iterable<TrackPoint> objects) throws
+            JsonProcessingException {
+        String strJsonResult = "";
+        for (TrackPoint object : objects) {
+            strJsonResult = strJsonResult + object.toJson() + ",\n";
+        }
+        return strJsonResult;
+    }
+
+    /*Перегрузка метода toJSON*/
+    private String toJSON(List<User> objects) throws
+            JsonProcessingException {
+        String strJsonResult = "";
+        for (User object : objects) {
+            strJsonResult = strJsonResult + object.toJson() + ",\n";
+        }
+        return strJsonResult;
     }
 
     //преобразовываем строку JSON в обьект
@@ -41,20 +88,6 @@ public class GPSController {
         return mapper.readValue(json, TrackPoint.class);
     }
 
-    /*метод получения информации
-    о пройденном маршруте для заданного устройства*/
-     @GetMapping("/point")
-     public String getrequestpoint(
-             @RequestParam("trackerId") int trackerId,
-             @RequestParam("size") int size) throws InterruptedException,
-             JsonProcessingException{
-         Iterable<TrackPoint> tracksPoint = jpaApplicationService.take(trackerId,size);
 
-         String strJsonResulr = "";
-         for (TrackPoint trackPoint : tracksPoint) {
-             strJsonResulr = strJsonResulr + trackPoint.toJson() + "\n";
-             log.info(trackPoint.toString());
-         }
-         return strJsonResulr;
-     }
+
 }
