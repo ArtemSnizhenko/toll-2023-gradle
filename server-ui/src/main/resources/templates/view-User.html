@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+
+<body>
+    <div  th:if="${trackPoints.size() > 0}">
+        <table border="1" cellpadding="5">
+            <thead class="thead-light">
+            <tr>
+                <th>TrackerId</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Azimuth</th>
+                <th>Speed</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="trackPoint : ${trackPoints}">
+                    <td th:text="${trackPoint.trackerId}"></td>
+                    <td th:text="${trackPoint.latitude}"></td>
+                    <td th:text="${trackPoint.longitude}"></td>
+                    <td th:text="${trackPoint.azimuth}"></td>
+                    <td th:text="${trackPoint.speed}"></td>
+
+                    <td>
+                        <a th:href="@{/edit/{id}(id=${trackPoint.id})}">Edit</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/books/delete/{id}(id=${trackPoint.id})}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

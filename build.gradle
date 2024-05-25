@@ -61,8 +61,8 @@ project(':server-core') {
         compile("org.springframework.boot:spring-boot-devtools")
         compile group: 'org.springframework', name: 'spring-context', version: '4.3.7.RELEASE'
 
-//        Зависимости для jd.jpa,liquibase,h2database
-        compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//        Зависимости для jd.service,liquibase,h2database
+        compile("org.springframework.boot:spring-boot-starter-data-service")
         compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
         compile group: 'com.h2database', name: 'h2', version: '1.4.195'
 
@@ -71,7 +71,7 @@ project(':server-core') {
     }
 
     jar {
-        baseName = 'jd.jpa-boot'
+        baseName = 'jd.service-boot'
         version =  '0.1.0'
     }
 }
@@ -95,8 +95,8 @@ project(':tracker-core') {
 //        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
         compile("org.springframework.boot:spring-boot-devtools")
 
-//        Зависимости для jd.jpa,liquibase,h2database
-        compile("org.springframework.boot:spring-boot-starter-data-jpa")
+//        Зависимости для jd.service,liquibase,h2database
+        compile("org.springframework.boot:spring-boot-starter-data-service")
         compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
         compile group: 'com.h2database', name: 'h2', version: '1.4.195'
         
@@ -106,7 +106,7 @@ project(':tracker-core') {
     }
 
     jar {
-        baseName = 'jd.jpa-boot'
+        baseName = 'jd.service-boot'
         version =  '0.1.0'
     }
 }

@@ -14,11 +14,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("css","img","/point").permitAll()
-                .antMatchers("/home").authenticated()
+                .antMatchers("css","img","/view-TrackPoint","/home","/viewTable").permitAll()
+//                .antMatchers("/home").authenticated()
                 .antMatchers("/routes","/payments").hasRole("CLIENT")
                 .antMatchers("/registerClient").hasRole("MANAGER")
                 .antMatchers("/registerManager").hasRole("ROOT")
+
                 .anyRequest().hasRole("CLIENT")
                 .and()
             .formLogin()

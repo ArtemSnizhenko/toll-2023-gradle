@@ -19,7 +19,7 @@ public class Point {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -63,28 +63,20 @@ public class Point {
         this.speed = speed;
     }
 
-
-
-/*    public String toJson_old() {
-        return "Point{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", autoId='" + autoId + '\'' +
-                '}';
-    }*/
-
-
     public String toJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
 
-    @Override
     public String toString() {
-        return "Point{" +
-                "latitude=" + latitude +
-                ", longitude='" + longitude + '\'' +
-                '}';
+        return "\n" + "TrackPoint{"  + "\n" +
+                "id=" + id  + ",\n" +
+                "trackerId=" + trackerId + ",\n" +
+                "latitude=" + latitude + ",\n" +
+                "longitude=" + longitude + ",\n" +
+                "azimuth=" + azimuth + ",\n" +
+                "speed=" + speed + "\n" +
+                '}' + "\n";
     }
 
 }
