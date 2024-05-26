@@ -1,20 +1,20 @@
 package controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.TrackPoint;
 import dao.User;
-import org.springframework.web.bind.annotation.RequestParam;
-import service.ConvertServuce;
+import org.springframework.web.bind.annotation.*;
+import service.ConvertService;
 import service.JpaInteractionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * Created by artem on 22.05.24.
+ * Класс реализующий RestFull Controller
+ * для работы с server-ui
  */
+
+@RestController
 public class UIController {
 
     private static final Logger log = LoggerFactory.
@@ -23,34 +23,42 @@ public class UIController {
     @Autowired
     JpaInteractionService jpaApplicationService;
 
-    /*@Autowired
-    ConvertServuce convertServuce;
+    @Autowired
+    ConvertService convertService;
 
-    *//*метод на Get запрос возвращает значения таблиц в формате JSON*//*
-    @GetMapping("/viewTables")
-    public String getRequestTrackPointView(
-            *//*@RequestParam("obj") String obj*//*) throws InterruptedException,
+    /*метод на Get запрос возвращает значения таблиц в формате JSON*/
+    @GetMapping("/viewTrackPoint")
+    public String getRequestTrackPointView() throws InterruptedException,
             JsonProcessingException {
-        String ssss = "sdf";
 
-        return convertServuce.toJSONTrackPoint(
+        return convertService.TrackPointtoJSON(
                 jpaApplicationService.readTableTrackPoint());
-        *//*if (obj == "TrackPoint"){
-            return convertServuce.toJSONTrackPoint(
-                    jpaApplicationService.readTableTrackPoint());
-        }else if (obj == "User"){
-            return convertServuce.toJSONUser(
-                    jpaApplicationService.readTableUser());
-        }else{
-            return "null";
-        }*//*
-    }*/
+    }
 
-   /* *//*метод на Get запрос возвращает всю таблицу User в формате JSON*//*
+    /*метод на Get запрос возвращает всю таблицу User в формате JSON*/
     @GetMapping("/viewUsers")
-    public String getRequestUsertView() throws InterruptedException,
+    public String getRequestUserView() throws InterruptedException,
             JsonProcessingException {
-        return convertServuce.toJSONUser(
+        return convertService.UsertoJSON(
                 jpaApplicationService.readTableUser());
-    }*/
+    }
+
+    /*метод на Get запрос возвращает всю таблицу User в формате JSON*/
+    @GetMapping("/viewUsersId")
+    public String getRequestUserId(
+            @RequestParam("id") int id) throws InterruptedException,
+            JsonProcessingException {
+        return jpaApplicationService.getRowUserId(id).toJson();
+    }
+
+    /*метод на Get запрос возвращает всю таблицу User в формате JSON*/
+    @PostMapping(value = "/udateUsers")
+    public String getRequestUserUpdate(
+            @RequestBody String table) throws Exception {
+//        table="{\"id\":1,\"userName\":\"Иванов\",\"password\":\"1\",\"roles\":\"CLIENT\"}";
+        User user = convertService.decodeDTOUser(table);
+        jpaApplicationService.update(user,user.getUserName(),user.getPassword(),user.getRoles());
+        return convertService.UsertoJSON(
+                jpaApplicationService.readTableUser());
+    }
 }

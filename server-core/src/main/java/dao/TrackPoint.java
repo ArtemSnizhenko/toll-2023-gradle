@@ -8,7 +8,7 @@ import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name="Tracks")
-public class TrackPoint  extends Point {
+public class TrackPoint extends Point {
 
     @Id
     @GeneratedValue(strategy = AUTO)

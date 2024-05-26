@@ -1,6 +1,7 @@
 package service;
 
 import dao.TrackPoint;
+import dao.User;
 import dao.repo.PointRepository;
 import dao.repo.UserRepository;
 import org.slf4j.Logger;
@@ -48,34 +49,39 @@ public class JpaInteractionService {
         return pointRepository.findByTrackerId(trackerId, page);
     }
 
-    /*получение данных из таблицы TrackPoint*//*
+    /*получение данных из таблицы TrackPoint*/
     public Iterable<TrackPoint> readTableTrackPoint() throws InterruptedException {
         return pointRepository.findAll();
     }
 
     /*получение данных из таблицы User*/
-    /*public Iterable<User> readTableUser() throws InterruptedException {
+    public Iterable<User> readTableUser() throws InterruptedException {
         return userRepository.findAll();
-    }*/
+    }
+
+    /*получение данных из таблицы User*/
+    public User getRowUserId(int id) throws InterruptedException {
+        return userRepository.findById(id);
+    }
 
     /*размещение данных в БД*/
     public void put(TrackPoint trackPoint){
         pointRepository.save(trackPoint);
     }
 
-    /*удаление данных в таблице TrackPoint*//*
-    private void delete(TrackPoint trackPoint) {
+    /*удаление данных в таблице TrackPoint*/
+    public void delete(TrackPoint trackPoint) {
         pointRepository.delete(trackPoint);
-    }*/
+    }
 
     /*удаление данных в таблице User
     * перегрузка метода delet*/
-    /*private void delete(User user) {
+    public void delete(User user) {
         userRepository.delete(user);
-    }*/
+    }
 
     /*обновление данных в таблице TrackPoint*/
-    /*private void update(TrackPoint trackPoint,
+    public void update(TrackPoint trackPoint,
                         int trackerId,
                         double latitude,
                         double longitude,
@@ -87,11 +93,11 @@ public class JpaInteractionService {
         trackPoint.setAzimuth(azimuth);
         trackPoint.setSpeed(speed);
         pointRepository.save(trackPoint);
-    }*/
+    }
 
     /*обновление данных в таблице User
     * перегрузка метода update*/
-   /* private void update(User user,
+    public void update(User user,
                         String userName,
                         String password,
                         String roles) {
@@ -99,5 +105,5 @@ public class JpaInteractionService {
         user.setPassword(password);
         user.setRoles(roles);
         userRepository.save(user);
-    }*/
+    }
 }

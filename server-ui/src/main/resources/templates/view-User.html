@@ -7,36 +7,51 @@
 
 
 <body>
-    <div  th:if="${trackPoints.size() > 0}">
-        <table border="1" cellpadding="5">
-            <thead class="thead-light">
-            <tr>
-                <th>TrackerId</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Azimuth</th>
-                <th>Speed</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="trackPoint : ${trackPoints}">
-                    <td th:text="${trackPoint.trackerId}"></td>
-                    <td th:text="${trackPoint.latitude}"></td>
-                    <td th:text="${trackPoint.longitude}"></td>
-                    <td th:text="${trackPoint.azimuth}"></td>
-                    <td th:text="${trackPoint.speed}"></td>
-
-                    <td>
-                        <a th:href="@{/edit/{id}(id=${trackPoint.id})}">Edit</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/books/delete/{id}(id=${trackPoint.id})}">Delete</a>
-                    </td>
+    <div  th:if="${users.size() > 0}">
+        <!--<form action="#" th:action="@{/editUser}" th:object="${userPost}" method="post">-->
+            <table border="1" cellpadding="5">
+                <thead class="thead-light">
+                <tr>
+                    <th>id</th>
+                    <th>userName</th>
+                    <th>password</th>
+                    <th>roles</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+
+                        <!--<td><input type="number" th:name="id"  th:value="${user.id}"/></td>
+                        <td><input type="text" th:name="userName" th:value="${user.userName}" /></td>
+                        <td><input type="text" th:name="password" th:value="${user.password}"/></td>
+                        <td><input type="text" th:name="roles" th:value="${user.roles}"/></td>-->
+
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.userName}"></td>
+                        <td th:text="${user.password}"></td>
+                        <td th:text="${user.roles}"></td>
+
+                        <!--<td><input type="submit" value="Edit" /></td>   -->
+                        <td>
+                            <a th:href="@{/editUser(
+                                id=${user.id},
+                                userName=${user.userName},
+                                password=${user.password},
+                                roles=${user.roles}
+                                )}">Edit
+                            </a>
+                        </td>
+
+                        <td>
+                            <a th:href="@{/books/delete/{id}(id=${user.id})}">Delete</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        <!--</form>-->
     </div>
 
 </body>

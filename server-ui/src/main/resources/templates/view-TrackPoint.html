@@ -11,6 +11,7 @@
         <table border="1" cellpadding="5">
             <thead class="thead-light">
             <tr>
+                <th>Id</th>
                 <th>TrackerId</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
@@ -22,6 +23,7 @@
             </thead>
             <tbody>
                 <tr th:each="trackPoint : ${trackPoints}">
+                    <td th:text="${trackPoint.id}"></td>
                     <td th:text="${trackPoint.trackerId}"></td>
                     <td th:text="${trackPoint.latitude}"></td>
                     <td th:text="${trackPoint.longitude}"></td>

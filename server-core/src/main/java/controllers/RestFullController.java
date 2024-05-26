@@ -1,23 +1,21 @@
 package controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import dao.TrackPoint;
-import service.ConvertServuce;
+import service.ConvertService;
 import service.JpaInteractionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by artem on 22.05.24.
+ * Класс реализующий RestFull Controller
  */
 
 @RestController
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 public class RestFullController {
 
     private static final Logger log = LoggerFactory.
@@ -27,7 +25,7 @@ public class RestFullController {
     JpaInteractionService jpaApplicationService;
 
     @Autowired
-    ConvertServuce convertServuce;
+    ConvertService convertService;
 
     /*метод получения информации
     о пройденном маршруте для заданного устройства*/
@@ -36,15 +34,8 @@ public class RestFullController {
             @RequestParam("trackerId") int trackerId,
             @RequestParam("size") int size) throws InterruptedException,
             JsonProcessingException {
-        Iterable<TrackPoint> tracksPoint = jpaApplicationService.take(trackerId,size);
 
-        String strJsonResult = "";
-        for (TrackPoint trackPoint : tracksPoint) {
-            strJsonResult = strJsonResult + trackPoint.toJson() + "\n";
-//             log.info(trackPoint.toString());
-        }
-        return strJsonResult;
-            /*return convertServuce.toJSONTrackPoint(
-                    jpaApplicationService.take(trackerId,size));*/
+        return convertService.TrackPointtoJSON(
+                jpaApplicationService.take(trackerId,size));
     }
 }

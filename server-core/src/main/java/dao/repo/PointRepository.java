@@ -9,4 +9,5 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface PointRepository extends CrudRepository<TrackPoint, Integer> {
     List<TrackPoint> findByTrackerId(int trackerId, Pageable page);
+    TrackPoint findById(int id);
 }

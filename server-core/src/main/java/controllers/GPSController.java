@@ -1,9 +1,8 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.Response;
-import dao.TrackPoint;
 
+import service.ConvertService;
 import service.JpaInteractionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,19 +24,15 @@ public class GPSController {
     @Autowired
     JpaInteractionService jpaApplicationService;
 
+    @Autowired
+    ConvertService convertService;
+
     /*определяем метод для приема координат в виде POST запросов*/
     @PostMapping(value = "/server_core")
     public String postRequestGPS(@RequestBody String sTrackPoint)
             throws Exception {
         log.info(sTrackPoint);
-        jpaApplicationService.put(decodeDTOTrackPoint(sTrackPoint));        //сохраняем полученные координаты в БД
+        jpaApplicationService.put(convertService.decodeDTOTrackPoint(sTrackPoint));        //сохраняем полученные координаты в БД
         return new Response(true).toJson();                         //возвращаем ответ на POST запрос в формате JSON
     }
-
-    //преобразовываем строку JSON в обьект
-    public TrackPoint decodeDTOTrackPoint(String json) throws Exception{
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, TrackPoint.class);
-    }
-
 }
