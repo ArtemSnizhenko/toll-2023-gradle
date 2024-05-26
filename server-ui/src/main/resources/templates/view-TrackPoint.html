@@ -5,41 +5,61 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
-
 <body>
-    <div  th:if="${trackPoints.size() > 0}">
-        <table border="1" cellpadding="5">
-            <thead class="thead-light">
-            <tr>
-                <th>Id</th>
-                <th>TrackerId</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Azimuth</th>
-                <th>Speed</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="trackPoint : ${trackPoints}">
-                    <td th:text="${trackPoint.id}"></td>
-                    <td th:text="${trackPoint.trackerId}"></td>
-                    <td th:text="${trackPoint.latitude}"></td>
-                    <td th:text="${trackPoint.longitude}"></td>
-                    <td th:text="${trackPoint.azimuth}"></td>
-                    <td th:text="${trackPoint.speed}"></td>
+<div  th:if="${trackPoints.size() > 0}">
+     <table border="1" cellpadding="5">
+        <thead class="thead-light">
+        <tr>
+            <th>Id</th>
+            <th>TrackerId</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Azimuth</th>
+            <th>Speed</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="trackPoint : ${trackPoints}">
 
-                    <td>
-                        <a th:href="@{/books/edit/{id}(id=${trackPoint.id})}">Edit</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/books/delete/{id}(id=${trackPoint.id})}">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <td th:text="${trackPoint.id}"></td>
+            <td th:text="${trackPoint.trackerId}"></td>
+            <td th:text="${trackPoint.latitude}"></td>
+            <td th:text="${trackPoint.longitude}"></td>
+            <td th:text="${trackPoint.azimuth}"></td>
+            <td th:text="${trackPoint.speed}"></td>
+
+            <!--<td><input type="submit" value="Edit" /></td>   -->
+            <td>
+                <a th:href="@{/editTrackPoint(
+                                id=${trackPoint.id},
+                                trackerId=${trackPoint.trackerId},
+                                latitude=${trackPoint.latitude},
+                                longitude=${trackPoint.longitude},
+                                azimuth=${trackPoint.azimuth},
+                                speed=${trackPoint.speed}
+                                )}">Edit
+                </a>
+            </td>
+
+            <td>
+                <a th:href="@{/deletTrackPoint(
+                                id=${trackPoint.id},
+                                trackerId=${trackPoint.trackerId},
+                                latitude=${trackPoint.latitude},
+                                longitude=${trackPoint.longitude},
+                                azimuth=${trackPoint.azimuth},
+                                speed=${trackPoint.speed}
+                                )}">Delet
+                </a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    <!--</form>-->
+</div>
 
 </body>
 </html>

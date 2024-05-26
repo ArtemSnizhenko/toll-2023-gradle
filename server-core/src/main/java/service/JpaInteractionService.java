@@ -59,11 +59,6 @@ public class JpaInteractionService {
         return userRepository.findAll();
     }
 
-    /*получение данных из таблицы User*/
-    public User getRowUserId(int id) throws InterruptedException {
-        return userRepository.findById(id);
-    }
-
     /*размещение данных в БД*/
     public void put(TrackPoint trackPoint){
         pointRepository.save(trackPoint);
@@ -87,6 +82,7 @@ public class JpaInteractionService {
                         double longitude,
                         double azimuth,
                         double speed) {
+        trackPoint.setSpeed(trackerId);
         trackPoint.setTrackerId(trackerId);
         trackPoint.setLatitude(latitude);
         trackPoint.setLongitude(longitude);

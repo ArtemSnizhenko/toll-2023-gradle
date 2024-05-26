@@ -45,7 +45,13 @@
                         </td>
 
                         <td>
-                            <a th:href="@{/books/delete/{id}(id=${user.id})}">Delete</a>
+                            <a th:href="@{/deletUser(
+                                id=${user.id},
+                                userName=${user.userName},
+                                password=${user.password},
+                                roles=${user.roles}
+                                )}">Delet
+                            </a>
                         </td>
 
                     </tr>

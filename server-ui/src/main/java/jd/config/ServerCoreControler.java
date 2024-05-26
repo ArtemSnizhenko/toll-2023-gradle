@@ -26,47 +26,45 @@ public class ServerCoreControler {
     @Autowired
     ConvertServuce convertServuce;
 
-    @RequestMapping(value = "/viewTrackPoint")
+    /*Отображение TrackPoint*/
+    @GetMapping(value = "/viewTrackPoint")
     public String showTrackPoint(Model model)
             throws Exception {
 
-        String sPoint = restTemplate.getForObject(
+        String str = restTemplate.getForObject(
                 "http://localhost:8080/viewTrackPoint", String.class);
 
-        String[] arrPoints = sPoint.split(",\n");
-        List<TrackPoint> trackPoints = new ArrayList<TrackPoint>();
+        String[] arrStr = str.split(",\n");
+        List<TrackPoint> objList = new ArrayList<TrackPoint>();
 
-        for (String point : arrPoints) {
-            trackPoints.add(convertServuce.decodeDTOTrackPoint(point));
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOTrackPoint(item));
         }
 
-        model.addAttribute("trackPoints", trackPoints);
+        model.addAttribute("trackPoints", objList);
         return "view-TrackPoint";
     }
 
+    /*Отображение User*/
     @GetMapping(value = "/viewUser")
     public String showUser(Model model)
             throws Exception {
 
-        String sUser = restTemplate.getForObject(
+        String str = restTemplate.getForObject(
                 "http://localhost:8080/viewUsers", String.class);
 
-        String[] arrUsers = sUser.split(",\n");
-        List<User> users = new ArrayList<User>();
+        String[] arrStr = str.split(",\n");
+        List<User> objList = new ArrayList<User>();
 
-        for (String user : arrUsers) {
-            users.add(convertServuce.decodeDTOUser(user));
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOUser(item));
         }
 
-        /*String table ="{\"id\":1,\"userName\":\"Иванов\",\"password\":\"1\",\"roles\":\"CLIENT\"}";
-
-        List<User> users = new ArrayList<User>();
-        users.add(convertServuce.decodeDTOUser(table));*/
-
-        model.addAttribute("users", users);
+        model.addAttribute("users", objList);
         return "view-User";
     }
 
+    /*Реадактирование User*/
     @GetMapping(value = "/editUser")
     private String editUser(
             @RequestParam("id") String id,
@@ -80,53 +78,134 @@ public class ServerCoreControler {
                 "\"userName\":\""+userName+"\"," +
                 "\"password\":\""+password+"\"," +
                 "\"roles\":\""+roles+"\"}";
-
-        User user = convertServuce.decodeDTOUser(table);
-
-        model.addAttribute("userPost", user);
+        User obj = convertServuce.decodeDTOUser(table);
+        model.addAttribute("userPost", obj);
         return "edit-User";
     }
 
+    /*Реадактирование TrackPoint*/
+    @GetMapping(value = "/editTrackPoint")
+    private String editTrackPoint(
+            @RequestParam("id") String id,
+            @RequestParam("trackerId") String trackerId,
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
+            @RequestParam("azimuth") String azimuth,
+            @RequestParam("speed") String speed,
+            Model model) throws Exception {
+
+        String table="{" +
+                "\"id\":"+id+"," +
+                "\"trackerId\":\""+trackerId+"\"," +
+                "\"latitude\":\""+latitude+"\"," +
+                "\"longitude\":\""+longitude+"\"," +
+                "\"azimuth\":\""+azimuth+"\"," +
+                "\"speed\":\""+speed+"\"}";
+        TrackPoint obj = convertServuce.decodeDTOTrackPoint(table);
+        model.addAttribute("trackPointPost", obj);
+        return "edit-TrackPoint";
+    }
+
+    /*Обновление  User*/
     @PostMapping(value = "/updateUser")
     private String updateUser(
             @ModelAttribute User userPost,
             Model model) throws Exception {
 
-        String sUser = restTemplate.postForObject(
-                "http://localhost:8080/udateUsers",userPost.toJson(), String.class);
+        String str = restTemplate.postForObject(
+                "http://localhost:8080/updateUser",userPost.toJson(), String.class);
 
-        String[] arrUsers = sUser.split(",\n");
-        List<User> users = new ArrayList<User>();
+        String[] arrStr = str.split(",\n");
+        List<User> objList = new ArrayList<User>();
 
-        for (String user : arrUsers) {
-            users.add(convertServuce.decodeDTOUser(user));
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOUser(item));
         }
 
-        model.addAttribute("users", users);
+        model.addAttribute("users", objList);
         return "view-User";
     }
 
+    /*Обновление  TrackPoint*/
+    @PostMapping(value = "/updateTrackPoint")
+    private String updateTrackPoint(
+            @ModelAttribute TrackPoint trackPointPost,
+            Model model) throws Exception {
 
-    @RequestMapping(value = "/updateUser1")
-    public String UpdateUser(/*@PathVariable("user") User userPost,*/ Model model)
-            throws Exception {
+        String str = restTemplate.postForObject(
+                "http://localhost:8080/updateTrackPoint",trackPointPost.toJson(), String.class);
 
-        /*String table = userPost.toJson();
-        String sUser = restTemplate.postForObject(
-                "http://localhost:8080/udateUsers",table, String.class);
+        String[] arrStr = str.split(",\n");
+        List<TrackPoint> objList = new ArrayList<TrackPoint>();
 
-        String[] arrUsers = sUser.split(",\n");
-        List<User> Users = new ArrayList<User>();
-
-        for (String user : arrUsers) {
-            Users.add(convertServuce.decodeDTOUser(user));
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOTrackPoint(item));
         }
 
-        model.addAttribute("users", Users);*/
+        model.addAttribute("trackPoints", objList);
+        return "view-TrackPoint";
+    }
+
+    /*Удаление User*/
+    @GetMapping(value = "/deletUser")
+    private String deletUser(
+            @RequestParam("id") String id,
+            @RequestParam("userName") String userName,
+            @RequestParam("password") String password,
+            @RequestParam("roles") String roles,
+            Model model) throws Exception {
+
+        String table="{" +
+                "\"id\":"+id+"," +
+                "\"userName\":\""+userName+"\"," +
+                "\"password\":\""+password+"\"," +
+                "\"roles\":\""+roles+"\"}";
+
+        String str = restTemplate.postForObject(
+                "http://localhost:8080/deletUser",table, String.class);
+
+        String[] arrStr = str.split(",\n");
+        List<User> objList = new ArrayList<User>();
+
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOUser(item));
+        }
+
+        model.addAttribute("users", objList);
         return "view-User";
     }
 
+    /*Удаление TrackPoint*/
+    @GetMapping(value = "/deletTracPoint")
+    private String deletTrackPoint(
+            @RequestParam("id") String id,
+            @RequestParam("trackerId") String trackerId,
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
+            @RequestParam("azimuth") String azimuth,
+            @RequestParam("speed") String speed,
+            Model model) throws Exception {
 
+        String table="{" +
+                "\"id\":"+id+"," +
+                "\"trackerId\":\""+trackerId+"\"," +
+                "\"latitude\":\""+latitude+"\"," +
+                "\"longitude\":\""+longitude+"\"," +
+                "\"azimuth\":\""+azimuth+"\"," +
+                "\"speed\":\""+speed+"\"}";
 
+        String str = restTemplate.postForObject(
+                "http://localhost:8080/deletUser",table, String.class);
+
+        String[] arrStr = str.split(",\n");
+        List<TrackPoint> objList = new ArrayList<TrackPoint>();
+
+        for (String item : arrStr) {
+            objList.add(convertServuce.decodeDTOTrackPoint(item));
+        }
+
+        model.addAttribute("trackPoints", objList);
+        return "view-TrackPoint";
+    }
 
 }
