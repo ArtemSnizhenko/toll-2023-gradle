@@ -176,7 +176,7 @@ public class ServerCoreControler {
     }
 
     /*Удаление TrackPoint*/
-    @GetMapping(value = "/deletTracPoint")
+    @GetMapping(value = "/deletTrackPoint")
     private String deletTrackPoint(
             @RequestParam("id") String id,
             @RequestParam("trackerId") String trackerId,
@@ -195,7 +195,7 @@ public class ServerCoreControler {
                 "\"speed\":\""+speed+"\"}";
 
         String str = restTemplate.postForObject(
-                "http://localhost:8080/deletUser",table, String.class);
+                "http://localhost:8080/deletTrackPoint",table, String.class);
 
         String[] arrStr = str.split(",\n");
         List<TrackPoint> objList = new ArrayList<TrackPoint>();

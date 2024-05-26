@@ -62,7 +62,7 @@ project(':server-core') {
         compile group: 'org.springframework', name: 'spring-context', version: '4.3.7.RELEASE'
 
 //        Зависимости для jd.service,liquibase,h2database
-        compile("org.springframework.boot:spring-boot-starter-data-service")
+        compile("org.springframework.boot:spring-boot-starter-data-jpa")
         compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
         compile group: 'com.h2database', name: 'h2', version: '1.4.195'
 
@@ -96,7 +96,7 @@ project(':tracker-core') {
         compile("org.springframework.boot:spring-boot-devtools")
 
 //        Зависимости для jd.service,liquibase,h2database
-        compile("org.springframework.boot:spring-boot-starter-data-service")
+        compile("org.springframework.boot:spring-boot-starter-data-jpa")
         compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
         compile group: 'com.h2database', name: 'h2', version: '1.4.195'
         

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update TrackPointTable</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <div align="center">
+        <form action="#" th:action="@{/updateTrackPoint}" th:object="${trackPointPost}" method="post">
+
+            <table border="0" cellpadding="10">
+                <tr>
+                    <td>id:</td>
+                    <td><input type="number" th:field="*{id}" /></td>
+                </tr>
+                <tr>
+                    <td>trackerId:</td>
+                    <td><input type="text" th:field="*{trackerId}" /></td>
+                </tr>
+                <tr>
+                    <td>latitude:</td>
+                    <td><input type="text" th:field="*{latitude}" /></td>
+                </tr>
+                <tr>
+                    <td>longitude:</td>
+                    <td><input type="text" th:field="*{longitude}" /></td>
+                </tr>
+                <tr>
+                    <td>azimuth:</td>
+                    <td><input type="text" th:field="*{azimuth}" /></td>
+                </tr>
+                <tr>
+                    <td>speed:</td>
+                    <td><input type="text" th:field="*{speed}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>
